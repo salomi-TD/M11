@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>UCO Report</title>
+
+<style>
+body {
+	font-family: Arial, sans-serif;
+}
+
+.container {
+	margin: 20px;
+}
+h1 {
+	text-align: center;
+	color: #428bca;
+}
+h2 {
+	text-align: center;
+	color: #428bca;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+th, td {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+	font-size:20px;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+.section-header {
+	background-color: #4CAF50;
+	color: white;
+	padding: 10px;
+	margin-top: 20px;
+}
+
+.section-content {
+	margin-top: 10px;
+}
+</style>
+</head>
+<body>
+	<div style="text-align: center; margin-bottom: 20px;">
+		<img th:if="${logoPath != null and not #strings.isEmpty(logoPath)}"
+			th:src="${logoPath}" alt="Logo" width="200" height="150" />
+	</div>
+
+	<h1>UCO Emission Report</h1>
+	<div class="container" th:if="${ucoReport != null}">
+		<p>
+			<strong>Duration</strong>: <span
+				th:if="${duration != null and not #strings.isEmpty(duration)}"
+				th:text="${duration}" style="text-transform: capitalize;"></span>
+		</p>
+		<div class="section-header">Gas Emission Overview</div>
+		<div class="section-content">
+			<table>
+				<tr>
+					<th>Total Gas Emission By CNG</th>
+					<td th:text="${ucoReport.gasEmissionByCng}"></td>
+				</tr>
+				<tr>
+					<th>Total Gas Emission By Petrol</th>
+					<td th:text="${ucoReport.gasEmissionByPetrol}"></td>
+				</tr>
+				<tr>
+					<th>Total Gas Emission By Diesel</th>
+					<td th:text="${ucoReport.gasEmissionByDiesel}"></td>
+				</tr>
+				<tr>
+					<th>Total Gas Emission</th>
+					<td
+						th:text="${ucoReport.gasEmissionByCng + ucoReport.gasEmissionByPetrol + ucoReport.gasEmissionByDiesel}"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Confirmation</title>
+    <!-- Add any additional head content here... -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f8f8f8;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #4CAF50; /* Green background color */
+            color: white; /* White text color */
+            border-radius: 10px 10px 0 0;
+        }
+
+        .logo {
+            max-width: 100px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Email Content Container -->
+    <div class="email-container">
+
+        <!-- Header with Company Logo -->
+        <div class="header">
+            <img th:src="@{https://media.licdn.com/dms/image/C560BAQHSJQVq61SFvw/company-logo_200_200/0/1659423174851?e=2147483647&v=beta&t=5HvYFlW2RvdLyJ7y3LUGGkhMTLHVKyelfpKs12XSW6o}" alt="Company Logo" class="logo">
+        </div>
+
+        <!-- Email Content -->
+        <div>
+
+            <!-- Greeting -->
+            <h2>Dear <span th:text="${recipientName}"></span>,</h2>
+
+            <!-- Thank You Message -->
+            <p>Thank you for registering with <span th:text="${companyName}"></span>! We are excited to have you on board.</p>
+
+		<p>Your Enrollment Id is: </p><h4> <span th:text="${enrollmentId}"></span> </h4>
+
+		<p>To set your Password, Please Click <a href="http://localhost:8082/set-password">here ...</a>.</p>
+            
+
+            <!-- Additional Information or Instructions -->
+            <p>If you have any questions or need further assistance, feel free to contact us at <span th:text="${contactEmail}"></span>.</p>
+
+            <!-- Closing Message -->
+            <p>Best regards,<br><span th:text="${companyName}"></span></p>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

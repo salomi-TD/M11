@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BDE Report</title>
+<style>
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 100%;
+	margin: 20px auto;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+}
+
+h2 {
+	text-align: center;
+	color: #428bca;
+	margin-bottom: 10px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 10px;
+	overflow-x: auto;
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 12px;
+	text-align: left;
+}
+
+th {
+	background-color: #f2f2f2;
+	color: #333;
+}
+
+tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+tr:hover {
+	background-color: #e0e0e0;
+}
+
+.productive {
+	color: #4CAF50;
+	font-weight: bold;
+}
+
+.unproductive {
+	color: #e74c3c;
+	font-weight: bold;
+}
+
+.onhold {
+	color: #007afc;
+	font-weight: bold;
+}
+
+.pending {
+	color: #fca000;
+	font-weight: bold;
+}
+
+.total-count {
+	font-weight: bold;
+	color: #333;
+}
+
+.d-flex {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+</style>
+</head>
+<body>
+	<div style="text-align: center; margin-bottom: 20px;">
+		<img th:if="${logoPath != null and not #strings.isEmpty(logoPath)}"
+			th:src="${logoPath}" alt="Logo" width="200" height="150" />
+	</div>
+
+	<h2>Business Development Executive Report</h2>
+
+	<div class="container" th:if="${bdeData != null}">
+		<p>
+			<strong>Duration</strong>: <span
+				th:if="${duration != null and not #strings.isEmpty(duration)}"
+				th:text="${duration}" style="text-transform: capitalize;"></span>
+		</p>
+		<h3>BDE Details</h3>
+		<p>
+			<strong>Employee ID</strong>: <span th:text="${bdeData.empId}"></span>
+		</p>
+		<p>
+			<strong>Name</strong>: <span th:text="${bdeData.fullname}"></span>
+		</p>
+		<p>
+			<strong>Email</strong>: <span th:text="${bdeData.email}"></span>
+		</p>
+		<p>
+			<strong>Contact</strong>: <span th:text="${bdeData.contact}"></span>
+		</p>
+		<p>
+			<strong>Region</strong>: <span th:text="${bdeData.region}"></span>
+		</p>
+		<p>
+			<strong>Total Restaurants Visited</strong>: <span
+				th:text="${(productiveList != null ? productiveList.size() : 0) +
+				(unproductiveList != null ? unproductiveList.size() : 0) +
+				(onHoldList != null ? onHoldList.size() : 0) +
+				(pendingList != null ? pendingList.size() : 0)}"></span>
+		</p>
+	</div>
+	<div class="container">
+		<th:block
+			th:if="${productiveList != null and not #lists.isEmpty(productiveList)}">
+			<div class="d-flex">
+				<h2 class="text-left">Productive List</h2>
+				<h3 class="text-right">
+					Restaurants Visited: <span class="total-count"
+						th:if="${productiveList != null}"
+						th:text="${productiveList.size()}"></span>
+				</h3>
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Restaurant Name</th>
+						<th>Contact No</th>
+						<th>Address</th>
+						<th>Google Location Tracker</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="fbo, fboIndex : ${productiveList}">
+						<td th:text="${fbo.name}"></td>
+						<td th:text="${fbo.restaurantName}"></td>
+						<td th:text="${fbo.contactNo}"></td>
+						<td th:text="${fbo.address}"></td>
+						<td th:text="${fbo.googleLocationTracker}"></td>
+						<td class="productive">PRODUCTIVE</td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
+
+		<th:block
+			th:if="${pendingList != null and not #lists.isEmpty(pendingList)}">
+			<div class="d-flex">
+				<h2 class="text-left">Pending List</h2>
+				<h3 class="text-right">
+					Restaurants Visited: <span class="total-count"
+						th:if="${pendingList != null}" th:text="${pendingList.size()}"></span>
+				</h3>
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Restaurant Name</th>
+						<th>Contact No</th>
+						<th>Address</th>
+						<th>Google Location Tracker</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="fbo, fboIndex : ${pendingList}">
+						<td th:text="${fbo.name}"></td>
+						<td th:text="${fbo.restaurantName}"></td>
+						<td th:text="${fbo.contactNo}"></td>
+						<td th:text="${fbo.address}"></td>
+						<td th:text="${fbo.googleLocationTracker}"></td>
+						<td class="pending">PENDING</td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
+
+		<th:block
+			th:if="${unproductiveList != null and not #lists.isEmpty(unproductiveList)}">
+			<div class="d-flex">
+				<h2 class="text-left">Unproductive List</h2>
+				<h3 class="text-right">
+					Restaurants Visited: <span class="total-count"
+						th:if="${unproductiveList != null}"
+						th:text="${unproductiveList.size()}"></span>
+				</h3>
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Restaurant Name</th>
+						<th>Contact No</th>
+						<th>Address</th>
+						<th>Google Location Tracker</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="fbo, fboIndex : ${unproductiveList}">
+						<td th:text="${fbo.name}"></td>
+						<td th:text="${fbo.restaurantName}"></td>
+						<td th:text="${fbo.contactNo}"></td>
+						<td th:text="${fbo.address}"></td>
+						<td th:text="${fbo.googleLocationTracker}"></td>
+						<td class="unproductive">UNPRODUCTIVE</td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
+
+		<th:block
+			th:if="${onHoldList != null and not #lists.isEmpty(onHoldList)}">
+			<div class="d-flex">
+				<h2 class="text-left">On Hold List</h2>
+				<h3 class="text-right">
+					Restaurants Visited: <span class="total-count"
+						th:if="${onHoldList != null}" th:text="${onHoldList.size()}"></span>
+				</h3>
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Restaurant Name</th>
+						<th>Contact No</th>
+						<th>Address</th>
+						<th>Google Location Tracker</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="fbo, fboIndex : ${onHoldList}">
+						<td th:text="${fbo.name}"></td>
+						<td th:text="${fbo.restaurantName}"></td>
+						<td th:text="${fbo.contactNo}"></td>
+						<td th:text="${fbo.address}"></td>
+						<td th:text="${fbo.googleLocationTracker}"></td>
+						<td class="onhold">ONHOLD</td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
+
+		<th:block
+			th:if="${bdeMonthlyTargetList != null and not #lists.isEmpty(bdeMonthlyTargetList)}">
+			<div class="d-flex">
+				<h2 class="text-left">BDE Monthly Target List</h2>
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>Target</th>
+						<th>Actual Visited</th>
+						<th>Balance To Visit</th>
+						<th>For the Month</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="target, targetIndex : ${bdeMonthlyTargetList}">
+						<td th:text="${target.targetToBeVisited}"></td>
+						<td th:text="${target.actualVisited}"></td>
+						<td th:text="${target.balanceToVisit}"></td>
+						<td th:text="${#dates.format(target.creationTime, 'MMM-YYYY')}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
+
+		<th:block
+			th:if="${unregisteredFboList != null and not #lists.isEmpty(unregisteredFboList)}">
+			<div class="d-flex">
+				<h2 class="text-left">Unregistered FBO List</h2>
+				<h3 class="text-right">
+					FBOs Visited: <span class="total-count"
+						th:if="${unregisteredFboList != null}"
+						th:text="${unregisteredFboList.size()}"></span>
+				</h3>
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>FBO Name</th>
+						<th>Visited Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="fbo, fboIndex : ${unregisteredFboList}">
+						<td th:text="${fbo.fboName}"></td>
+						<td th:text="${#dates.format(fbo.lastVisitDate, 'YYYY-MM-dd')}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
+	</div>
+</body>
+</html>

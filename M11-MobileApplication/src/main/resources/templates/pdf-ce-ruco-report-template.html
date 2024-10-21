@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your Table Example</title>
+<style>
+body {
+	font-family: 'Arial', sans-serif;
+	margin: 20px;
+	color: #333;
+}
+
+h2 {
+	text-align: center;
+	color: #428bca;
+}
+
+.container {
+	margin: 20px;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+th, td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+th {
+	background-color: #428bca;
+	color: #fff;
+}
+
+tr:hover {
+	background-color: #f5f5f5;
+}
+
+hr {
+	border: 1px solid #ddd;
+}
+
+.totals {
+	margin-top: 20px;
+}
+
+.totals p {
+	margin: 5px 0;
+}
+</style>
+</head>
+<body>
+	<div style="text-align: center; margin-bottom: 20px;">
+		<img th:if="${logoPath != null and not #strings.isEmpty(logoPath)}"
+			th:src="${logoPath}" alt="Logo" width="200" height="150" />
+	</div>
+
+	<h2 th:if="${EmpDetails != null}"
+		th:text="'Orders Assigned To ' + ${EmpDetails.role} + ' - ' + ${EmpDetails.fullname} + ' (Employee ID - ' + ${EmpDetails.empId} + ')'"></h2>
+	<div class="container">
+		<h3>Total Orders Statistics</h3>
+		<p>
+			<strong>Duration</strong>: <span
+				th:if="${calculationData.duration != null and not #strings.isEmpty(calculationData.duration)}"
+				th:text="${calculationData.duration}"
+				style="text-transform: capitalize;"></span>
+		</p>
+		<p>
+			<strong>Total Orders</strong>: <span
+				th:text="${calculationData.totalOrders}"></span>
+		</p>
+		<p>
+			<strong>Total Oil Collected</strong>: <span
+				th:text="${calculationData.totalOil}"></span> KG
+		</p>
+		<p>
+			<strong>Total Price</strong>: <span
+				th:text="${calculationData.totalPrice}"></span>
+		</p>
+	</div>
+
+	<div class="container">
+		<table>
+			<thead>
+				<tr>
+					<th>S No</th>
+					<th>Purchase Order ID</th>
+					<th>Weight Calculated (in KG)</th>
+					<th>Total Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="data, orderIndex : ${dataList}">
+					<td th:text="${orderIndex.index + 1}"></td>
+					<td th:text="${data.purchaseOrderId}"></td>
+					<td th:text="${data.weightCalculatedInKG}"></td>
+					<td th:text="${data.totalPrice}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

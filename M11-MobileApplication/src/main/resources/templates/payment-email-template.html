@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Approval</title>
+    <!-- Add any additional head content here... -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f8f8f8;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #007BFF; /* Blue background color for payment approval */
+            color: white; /* White text color */
+            border-radius: 10px 10px 0 0;
+        }
+
+        .logo {
+            max-width: 100px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Email Content Container -->
+    <div class="email-container">
+
+        <!-- Header with Company Logo -->
+        <div class="header">
+            <img th:src="@{https://media.licdn.com/dms/image/C560BAQHSJQVq61SFvw/company-logo_200_200/0/1659423174851?e=2147483647&v=beta&t=5HvYFlW2RvdLyJ7y3LUGGkhMTLHVKyelfpKs12XSW6o}" alt="Company Logo" class="logo">
+        </div>
+
+        <!-- Email Content -->
+        <div>
+
+            <!-- Greeting -->
+            <h2>Dear <span th:text="${recipientName}"></span>,</h2>
+
+            <!-- Payment Approval Message -->
+            <p>Congratulations! Your payment has been approved</p>
+
+            <!-- Payment Details or Instructions -->
+            <p>If you have any questions or concerns regarding this payment, please contact our support team at <span th:text="${contactEmail}"></span>.</p>
+
+            <!-- Closing Message -->
+            <p>Thank you for choosing <span th:text="${companyName}"></span>.</p>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

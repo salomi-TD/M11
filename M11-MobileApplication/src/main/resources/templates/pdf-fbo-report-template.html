@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Invoice</title>
+<style>
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 100%;
+	margin: 20px auto;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+}
+
+h2 {
+	text-align: center;
+	color: #428bca;
+	margin-bottom: 10px;
+	background-color: #f2f2f2;
+}
+
+h3 {
+	background-color: #f2f2f2;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 10px;
+	overflow-x: auto;
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 12px;
+	text-align: left;
+}
+
+th {
+	background-color: #f2f2f2;
+	color: #333;
+}
+
+tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+tr:hover {
+	background-color: #e0e0e0;
+}
+
+.total-count {
+	font-weight: bold;
+	color: #333;
+}
+</style>
+</head>
+<body>
+	<div style="text-align: center; margin-bottom: 20px;">
+		<img th:if="${logoPath != null and not #strings.isEmpty(logoPath)}"
+			th:src="${logoPath}" alt="Logo" width="200" height="150" />
+	</div>
+
+	<h2>Quarterly Report of Food Business Operator</h2>
+	<div class="container" th:if="${fboData != null}">
+		<h3>FBO Details</h3>
+		<p>
+			<strong>Name</strong>: <span th:text="${fboData.name}"></span>
+		</p>
+		<p>
+			<strong>Restaurant Name</strong>: <span
+				th:text="${fboData.restaurantName}"></span>
+		</p>
+		<p>
+			<strong>Contact No</strong>: <span th:text="${fboData.contactNo}"></span>
+		</p>
+		<p>
+			<strong>Address</strong>: <span th:text="${fboData.address}"></span>
+		</p>
+		<p>
+			<strong>Region</strong>: <span th:text="${fboData.region}"></span>
+		</p>
+	</div>
+	<div class="container">
+		<h3>Order Details</h3>
+		<table>
+			<thead>
+				<tr>
+					<th>Purchase Order ID</th>
+					<th>Weight Calculated (KG)</th>
+					<th>Total Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr
+					th:if="${weighmentDataList != null and not #lists.isEmpty(weighmentDataList)}"
+					th:each="weighmentData : ${weighmentDataList}">
+					<td th:text="${weighmentData.purchaseOrderId}"></td>
+					<td th:text="${weighmentData.weightCalculatedInKG}"></td>
+					<td th:text="${weighmentData.totalPrice}"></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3>Total Summary</h3>
+		<p>
+			Total Weight of Oil: <span class="total-count"
+				th:text="${totalWeightOfOil}"></span>
+		</p>
+		<p>
+			Amount to be Received: <span class="total-count"
+				th:text="${pendingAmount}"></span>
+		</p>
+		<p>
+			Received Amount: <span class="total-count" th:text="${paidAmount}"></span>
+		</p>
+	</div>
+</body>
+</html>

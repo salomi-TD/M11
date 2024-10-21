@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>BDE Report</title>
+	<style>
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			max-width: 100%;
+			margin: 20px auto;
+			padding: 20px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			border-radius: 8px;
+		}
+	h1 {
+			text-align: center;
+			color: #428bca;
+			margin-bottom: 10px;
+		}
+		h2 {
+			text-align: center;
+			color: #428bca;
+			margin-bottom: 10px;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 10px;
+			overflow-x: auto;
+		}
+
+		th,
+		td {
+			border: 1px solid #ddd;
+			padding: 12px;
+			text-align: left;
+			font-size:18px;
+		}
+
+		th {
+			background-color: #f2f2f2;
+			color: #333;
+			font-size:18px;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f9f9f9;
+		}
+
+		tr:hover {
+			background-color: #e0e0e0;
+		}
+
+		.productive {
+			color: #4CAF50;
+			font-weight: bold;
+		}
+
+		.unproductive {
+			color: #e74c3c;
+			font-weight: bold;
+		}
+
+		.onhold {
+			color: #007afc;
+			font-weight: bold;
+		}
+
+		.pending {
+			color: #fca000;
+			font-weight: bold;
+		}
+
+		.total-count {
+			font-weight: bold;
+			color: #333;
+		}
+
+		.d-flex {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 10px;
+		}
+
+		.text-left {
+			text-align: left;
+		}
+
+		.text-right {
+			text-align: right;
+		}
+	</style>
+</head>
+
+<body>
+	<div style="text-align: center; margin-bottom: 20px;">
+		<img th:if="${logoPath != null and not #strings.isEmpty(logoPath)}" th:src="${logoPath}" alt="Logo" width="200"
+			height="150" />
+	</div>
+
+	<h2>Emission Report</h2>
+
+	<div class="container" th:if="${emissionReport != null}">
+		<p>
+			<strong>Duration</strong>: <span th:if="${duration != null and not #strings.isEmpty(duration)}"
+				th:text="${duration}" style="text-transform: capitalize;"></span>
+		</p>
+	</div>
+	<div class="container">
+
+		<th:block th:if="${emissionReport != null and not #lists.isEmpty(emissionReport)}">
+			<div class="d-flex">
+				<h1 class="text-left">Emission Repot List</h1>
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>Vechicle Number</th>
+						<th>Total KM</th>
+						<th>Gas Emission</th>
+						<th>fuel Type</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="target, targetIndex : ${emissionReport}">
+						<td th:text="${target.vehicleNumber}"></td>
+						<td th:text="${target.totalKM}"></td>
+						<td th:text="${target.gasEmission}"></td>
+						<td th:text="${target.fuelType}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
+	</div>
+</body>
+
+</html>

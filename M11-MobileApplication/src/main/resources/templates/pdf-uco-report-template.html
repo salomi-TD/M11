@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>UCO Report</title>
+
+<style>
+body {
+	font-family: Arial, sans-serif;
+}
+
+.container {
+	margin: 20px;
+}
+
+h2 {
+	text-align: center;
+	color: #428bca;
+}
+h1 {
+	text-align: center;
+	color: #428bca;
+}
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+th, td {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+	font-size:20px;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+.section-header {
+	background-color: #4CAF50;
+	color: white;
+	padding: 10px;
+	margin-top: 20px;
+}
+
+.section-content {
+	margin-top: 10px;
+}
+</style>
+</head>
+<body>
+	<div style="text-align: center; margin-bottom: 20px;">
+		<img th:if="${logoPath != null and not #strings.isEmpty(logoPath)}"
+			th:src="${logoPath}" alt="Logo" width="200" height="150" />
+	</div>
+
+	<h1>UCO Report</h1>
+	<div class="container" th:if="${ucoReport != null}">
+		<p>
+			<strong>Duration</strong>: <span
+				th:if="${duration != null and not #strings.isEmpty(duration)}"
+				th:text="${duration}" style="text-transform: capitalize;"></span>
+		</p>
+		<div class="section-header">FBOs Overview</div>
+		<div class="section-content">
+			<table>
+				<tr>
+					<th>Approved FBOs</th>
+					<td th:text="${ucoReport.totalApprovedFbos}"></td>
+				</tr>
+				<tr>
+					<th>Pending FBOs</th>
+					<td th:text="${ucoReport.totalPendingFbos}"></td>
+				</tr>
+				<tr>
+					<th>Rejected FBOs</th>
+					<td th:text="${ucoReport.totalRejectedFbos}"></td>
+				</tr>
+				<tr>
+					<th>On Hold FBOs</th>
+					<td th:text="${ucoReport.totalOnHoldFbos}"></td>
+				</tr>
+				<tr>
+					<th>Total No of FBOs</th>
+					<td
+						th:text="${ucoReport.totalApprovedFbos + ucoReport.totalPendingFbos + ucoReport.totalRejectedFbos + ucoReport.totalOnHoldFbos}"></td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="section-header">Payment Overview</div>
+		<div class="section-content">
+			<table>
+				<tr>
+					<th>Total No of Payment Approved Orders</th>
+					<td th:text="${ucoReport.totalPaymentApprovedOrders}"></td>
+				</tr>
+				<tr>
+					<th>Total No of Payment Pending Orders</th>
+					<td th:text="${ucoReport.totalPaymentPendingOrders}"></td>
+				</tr>
+				<tr>
+					<th>Total No of Payment Pending Orders At RUCO</th>
+					<td th:text="${ucoReport.totalPaymentPendingOrdersAtRuco}"></td>
+				</tr>
+				<tr>
+					<th>Total No of Orders</th>
+					<td th:text="${ucoReport.totalOrders}"></td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="section-header">Oil Collection Overview</div>
+		<div class="section-content">
+			<table>
+				<tr>
+					<th>Total Weight of Oil Collected</th>
+					<td th:text="${ucoReport.totalWeightOfOil}"></td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="section-header">Amount Overview</div>
+		<div class="section-content">
+			<table>
+				<tr>
+					<th>Total Pending Amount</th>
+					<td th:text="${ucoReport.pendingAmount}"></td>
+				</tr>
+				<tr>
+					<th>Total Paid Amount</th>
+					<td th:text="${ucoReport.paidAmount}"></td>
+				</tr>
+				<tr>
+					<th>Total Amount</th>
+					<td th:text="${ucoReport.paidAmount + ucoReport.pendingAmount}"></td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="section-header">Gas Emission Overview</div>
+		<div class="section-content">
+			<table>
+				<tr>
+					<th>Total Gas Emission By CNG</th>
+					<td th:text="${ucoReport.gasEmissionByCng}"></td>
+				</tr>
+				<tr>
+					<th>Total Gas Emission By Petrol</th>
+					<td th:text="${ucoReport.gasEmissionByPetrol}"></td>
+				</tr>
+				<tr>
+					<th>Total Gas Emission By Diesel</th>
+					<td th:text="${ucoReport.gasEmissionByDiesel}"></td>
+				</tr>
+				<tr>
+					<th>Total Gas Emission</th>
+					<td
+						th:text="${ucoReport.gasEmissionByCng + ucoReport.gasEmissionByPetrol + ucoReport.gasEmissionByDiesel}"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
